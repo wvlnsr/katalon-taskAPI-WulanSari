@@ -17,12 +17,11 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-def response = WS.sendRequest(findTestObject('comments/get-comments'))
+def response = WS.sendRequest(findTestObject('albums/get-albums'))
 def slurper = new groovy.json.JsonSlurper()
 def result = slurper.parseText(response.getResponseBodyContent())
 def id = result[0].id
 
 assert id != null
 assert id instanceof Integer
-assert id == 21
-
+assert id == 61
