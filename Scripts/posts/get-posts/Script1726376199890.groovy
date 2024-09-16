@@ -17,18 +17,11 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-def response = WS.sendRequest(findTestObject('create-a-post'))
-WS.verifyResponseStatusCode(response, 201)
+def response = WS.sendRequest(findTestObject('posts/get-posts'))
 def slurper = new groovy.json.JsonSlurper()
 def result = slurper.parseText(response.getResponseBodyContent())
+def id = result[0].id
 
-def title = result.title
-def body = result.body
-def userId = result.userId
-
-assert title instanceof String
-assert body instanceof String
-assert userId instanceof Integer
-
-assert body == 'Wulan is online'
-assert userId != null
+assert id != null
+assert id instanceof Integer
+assert id == 1
