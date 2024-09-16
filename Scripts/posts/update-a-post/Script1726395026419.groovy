@@ -17,12 +17,18 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-def response = WS.sendRequest(findTestObject('get-comments'))
+def response = WS.sendRequest(findTestObject('posts/update-a-post'))
+WS.verifyResponseStatusCode(response, 200)
 def slurper = new groovy.json.JsonSlurper()
 def result = slurper.parseText(response.getResponseBodyContent())
-def id = result[0].id
 
-assert id != null
-assert id instanceof Integer
-assert id == 1
+def title = result.title
+def body = result.body
+def userId = result.userId
 
+assert title instanceof String
+assert body instanceof String
+assert userId instanceof Integer
+
+assert userId != null
+assert body == 'This data has been updated'
